@@ -50,6 +50,42 @@ body{
 }
 
 /* =========================
+   RATE TICKER
+========================= */
+.ticker{
+  width:100%;
+  background:rgba(18,26,38,0.85);
+  border-bottom:1px solid rgba(255,215,0,0.12);
+  padding:10px 0;
+  overflow:hidden;
+  position:sticky;
+  top:0;
+  z-index:2000;
+  backdrop-filter:blur(12px);
+}
+
+.ticker-track{
+  display:flex;
+  gap:60px;
+  white-space:nowrap;
+  animation: scrollTicker 20s linear infinite;
+}
+
+.ticker span{
+  font-size:14px;
+  color:#ddd;
+}
+
+.ticker strong{
+  color:gold;
+}
+
+@keyframes scrollTicker{
+  from{transform:translateX(100%)}
+  to{transform:translateX(-100%)}
+}
+
+/* =========================
    HEADER
 ========================= */
 header{
@@ -61,7 +97,7 @@ header{
   backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(255,215,0,0.1);
   position:sticky;
-  top:0;
+  top:45px;
   z-index:1000;
 }
 
@@ -71,11 +107,12 @@ header{
   gap:10px;
   font-weight:bold;
   color:gold;
+  font-size:18px;
 }
 
 .logo img{
-  width:40px;
-  height:40px;
+  width:42px;
+  height:42px;
   border-radius:10px;
   border:2px solid gold;
 }
@@ -101,6 +138,7 @@ nav a:hover{
   font-weight:bold;
   transition:0.3s;
   box-shadow:0 0 15px rgba(255,215,0,0.3);
+  display:inline-block;
 }
 
 .btn:hover{
@@ -112,6 +150,12 @@ nav a:hover{
   background:#229ED9;
   color:white;
   box-shadow:0 0 15px rgba(34,158,217,0.4);
+}
+
+.btn-small{
+  padding:8px 12px;
+  font-size:13px;
+  border-radius:8px;
 }
 
 /* =========================
@@ -144,6 +188,7 @@ nav a:hover{
   color:#bbb;
   margin-top:15px;
   line-height:1.6;
+  font-size:16px;
 }
 
 .hero-img{
@@ -191,12 +236,29 @@ section{
   border-radius:15px;
   transition:0.4s;
   backdrop-filter:blur(10px);
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,215,0,0.12), transparent);
+  transition:0.6s;
+}
+
+.card:hover::before{
+  left:100%;
 }
 
 .card:hover{
   transform:translateY(-8px);
   border-color:gold;
-  box-shadow:0 0 25px rgba(255,215,0,0.1);
+  box-shadow:0 0 25px rgba(255,215,0,0.12);
 }
 
 .card h3{
@@ -205,21 +267,87 @@ section{
 }
 
 /* =========================
-   COINS
+   COINS TABLE
 ========================= */
-.coins span{
-  display:inline-block;
-  margin:6px;
+.coin-table{
+  display:grid;
+  gap:15px;
+}
+
+.coin-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(18,26,38,0.75);
+  border:1px solid rgba(255,215,0,0.08);
+  padding:15px 18px;
+  border-radius:15px;
+  backdrop-filter:blur(10px);
+  transition:0.4s;
+  position:relative;
+  overflow:hidden;
+}
+
+.coin-row:hover{
+  transform:scale(1.02);
+  border-color:gold;
+  box-shadow:0 0 20px rgba(255,215,0,0.12);
+}
+
+.coin-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.coin-icon{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  background:rgba(255,215,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  color:gold;
+  border:1px solid rgba(255,215,0,0.12);
+}
+
+.coin-name{
+  font-size:16px;
+  font-weight:bold;
+}
+
+.coin-right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.rate-box{
+  background:#0f1622;
+  border:1px solid rgba(255,215,0,0.12);
   padding:8px 12px;
   border-radius:10px;
-  background:#0f1622;
-  border:1px solid rgba(255,215,0,0.1);
+  font-size:13px;
+  color:#ddd;
   transition:0.3s;
 }
 
-.coins span:hover{
-  transform:scale(1.08);
-  border-color:gold;
+.rate-box strong{
+  color:gold;
+}
+
+.flash{
+  animation: flashRate 0.6s ease;
+}
+
+@keyframes flashRate{
+  0%{transform:scale(1); background:#0f1622;}
+  50%{transform:scale(1.08); background:rgba(34,158,217,0.18);}
+  100%{transform:scale(1); background:#0f1622;}
 }
 
 /* =========================
@@ -234,6 +362,35 @@ section{
 .fade.show{
   opacity:1;
   transform:translateY(0);
+}
+
+/* =========================
+   TOAST
+========================= */
+.toast{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  background:rgba(18,26,38,0.92);
+  padding:14px 18px;
+  border-radius:14px;
+  border:1px solid rgba(255,215,0,0.2);
+  color:#fff;
+  font-size:14px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:0.4s;
+  z-index:5000;
+  backdrop-filter:blur(12px);
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.toast strong{
+  color:gold;
 }
 
 /* =========================
@@ -258,6 +415,17 @@ footer{
   .hero h1{
     font-size:38px;
   }
+
+  header{
+    flex-direction:column;
+    gap:12px;
+  }
+
+  nav{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
 }
 </style>
 </head>
@@ -266,20 +434,29 @@ footer{
 
 <div class="bg"></div>
 
+<!-- RATE TICKER -->
+<div class="ticker">
+  <div class="ticker-track" id="tickerTrack">
+    <span>🔥 <strong>CryptoZee Rate:</strong> Buy = ₦1430 / $1 | Sell = ₦1350 / $1</span>
+    <span>⚡ Fast Settlement • Secure Trading • 24/7 Telegram Support</span>
+    <span>💛 Buy & Sell USDT, BTC, ETH, SOL & More</span>
+  </div>
+</div>
+
 <header>
   <div class="logo">
-    <img src="./img/CZ Logo.png">
-    CryptoZee <br>Exchange</br>
+    <img src="./img/CZ Logo.png" alt="CryptoZee Logo">
+    CryptoZee Exchange
   </div>
 
   <nav>
     <a href="#services">Services</a>
-    <a href="#coins">Coins</a>
+    <a href="#coins">Rates</a>
     <a href="#how">How It Works</a>
   </nav>
 
   <a class="btn" href="https://t.me/cryptozee001" target="_blank">
-    Trade on Telegram
+    Trade Your Digital Assets
   </a>
 </header>
 
@@ -290,15 +467,17 @@ footer{
     <p>
       Fast, secure crypto trading via Telegram. 
       Buy USDT, BTC, ETH and more with instant settlement.
+      <br><br>
+      <strong style="color:gold;">Today’s Rate:</strong> Buy = ₦1430 / $1 • Sell = ₦1350 / $1
     </p>
 
     <br/>
 
     <a class="btn btn-blue" href="https://t.me/cryptozee001">Buy Crypto</a>
-    <a class="btn" href="https://t.me/cryptozee_001">Sell Crypto</a>
+    <a class="btn" href="https://t.me/cryptozee001">Sell Crypto</a>
   </div>
 
-  <img src="./img/buysell.JPG" class="hero-img">
+  <img src="./img/buysell.JPG" class="hero-img" alt="Crypto Trading">
 </section>
 
 <!-- SERVICES -->
@@ -313,14 +492,15 @@ footer{
   </div>
 </section>
 
-<!-- COINS -->
+<!-- COINS RATES -->
 <section id="coins" class="fade">
-  <h2 class="title">Supported Coins</h2>
+  <h2 class="title">Live Coin Rates</h2>
 
-  <div class="coins">
-    <span>USDT</span><span>BTC</span><span>ETH</span><span>SOL</span>
-    <span>BNB</span><span>XRP</span><span>ADA</span><span>DOGE</span>
-  </div>
+  <p style="color:#aaa; margin-bottom:20px;">
+    Below are our current exchange rates. Tap "Copy" to copy rate instantly.
+  </p>
+
+  <div class="coin-table" id="coinTable"></div>
 </section>
 
 <!-- HOW -->
@@ -328,9 +508,9 @@ footer{
   <h2 class="title">How It Works</h2>
 
   <div class="grid">
-    <div class="card"><h3>1. Message Us</h3><p>Click Telegram button.</p></div>
-    <div class="card"><h3>2. Get Rate</h3><p>We send live rate instantly.</p></div>
-    <div class="card"><h3>3. Pay / Send</h3><p>Bank or crypto transfer.</p></div>
+    <div class="card"><h3>1. Message Us</h3><p>Click Telegram button to start trading.</p></div>
+    <div class="card"><h3>2. Confirm Rate</h3><p>We confirm today’s rate instantly.</p></div>
+    <div class="card"><h3>3. Pay / Send</h3><p>Transfer to bank or send crypto wallet.</p></div>
     <div class="card"><h3>4. Instant Delivery</h3><p>Fast settlement guaranteed.</p></div>
   </div>
 </section>
@@ -339,7 +519,7 @@ footer{
 <section class="fade" style="text-align:center;">
   <h2 class="title">Ready To Trade?</h2>
   <p style="color:#aaa;max-width:600px;margin:auto;">
-    Join CryptoZee and start trading instantly via Telegram.
+    Join CryptoZee and start trading instantly via Telegram. Fast response, safe deals, instant settlement.
   </p>
   <br/>
   <a class="btn btn-blue" href="https://t.me/cryptozee001">Start Trading</a>
@@ -349,8 +529,12 @@ footer{
   © 2026 CryptoZee. All Rights Reserved.
 </footer>
 
+<div class="toast" id="toast"></div>
+
 <script>
-// scroll reveal
+// ===============================
+// SCROLL REVEAL
+// ===============================
 const elements = document.querySelectorAll('.fade');
 
 const observer = new IntersectionObserver(entries=>{
@@ -363,14 +547,127 @@ const observer = new IntersectionObserver(entries=>{
 
 elements.forEach(el=>observer.observe(el));
 
-// floating particles
-for(let i=0;i<25;i++){
+// ===============================
+// FLOATING PARTICLES
+// ===============================
+for(let i=0;i<28;i++){
   let p = document.createElement('div');
   p.className = 'particle';
   p.style.left = Math.random()*100 + "vw";
   p.style.animationDuration = (5 + Math.random()*10) + "s";
+  p.style.opacity = Math.random() * 0.6;
+  p.style.width = (4 + Math.random()*6) + "px";
+  p.style.height = p.style.width;
   document.body.appendChild(p);
 }
+
+// ===============================
+// COIN RATE SYSTEM
+// ===============================
+const buyRate = 1430;
+const sellRate = 1350;
+
+const coins = [
+  {name:"USDT", symbol:"USDT"},
+  {name:"Bitcoin", symbol:"BTC"},
+  {name:"Ethereum", symbol:"ETH"},
+  {name:"Solana", symbol:"SOL"},
+  {name:"Binance Coin", symbol:"BNB"},
+  {name:"Ripple", symbol:"XRP"},
+  {name:"Cardano", symbol:"ADA"},
+  {name:"Dogecoin", symbol:"DOGE"}
+];
+
+const coinTable = document.getElementById("coinTable");
+
+function formatNaira(amount){
+  return "₦" + amount.toLocaleString();
+}
+
+function showToast(message){
+  const toast = document.getElementById("toast");
+  toast.innerHTML = message;
+  toast.classList.add("show");
+
+  setTimeout(()=>{
+    toast.classList.remove("show");
+  }, 2500);
+}
+
+function copyText(text){
+  navigator.clipboard.writeText(text).then(()=>{
+    showToast(`✅ Copied: <strong>${text}</strong>`);
+  });
+}
+
+function buildCoins(){
+  coinTable.innerHTML = "";
+
+  coins.forEach((coin)=>{
+    const row = document.createElement("div");
+    row.className = "coin-row";
+
+    row.innerHTML = `
+      <div class="coin-left">
+        <div class="coin-icon">${coin.symbol}</div>
+        <div>
+          <div class="coin-name">${coin.name}</div>
+          <div style="font-size:13px;color:#888;">(${coin.symbol})</div>
+        </div>
+      </div>
+
+      <div class="coin-right">
+        <div class="rate-box buy-box">
+          <strong>BUY:</strong> ${formatNaira(buyRate)} / $1
+        </div>
+
+        <div class="rate-box sell-box">
+          <strong>SELL:</strong> ${formatNaira(sellRate)} / $1
+        </div>
+
+        <button class="btn btn-small btn-blue copy-btn">Copy</button>
+      </div>
+    `;
+
+    row.querySelector(".copy-btn").addEventListener("click", ()=>{
+      copyText(`${coin.symbol} Rate - BUY: ₦${buyRate}/$1 | SELL: ₦${sellRate}/$1`);
+    });
+
+    coinTable.appendChild(row);
+  });
+}
+
+buildCoins();
+
+// ===============================
+// PROFESSIONAL LIVE UPDATE EFFECT
+// (Just visual animation - rate stays same)
+// ===============================
+setInterval(()=>{
+  const buyBoxes = document.querySelectorAll(".buy-box");
+  const sellBoxes = document.querySelectorAll(".sell-box");
+
+  buyBoxes.forEach(box=>{
+    box.classList.add("flash");
+    setTimeout(()=>box.classList.remove("flash"), 600);
+  });
+
+  sellBoxes.forEach(box=>{
+    box.classList.add("flash");
+    setTimeout(()=>box.classList.remove("flash"), 600);
+  });
+}, 6000);
+
+// ===============================
+// DYNAMIC TITLE EFFECT
+// ===============================
+let titleState = true;
+setInterval(()=>{
+  document.title = titleState 
+    ? "CryptoZee | Buy ₦1430 • Sell ₦1350"
+    : "CryptoZee | Instant Telegram Trading";
+  titleState = !titleState;
+}, 2500);
 </script>
 
 </body>
