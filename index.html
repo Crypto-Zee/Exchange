@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CryptoZee | Buy & Sell Crypto Instantly</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  background:#070b10;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* =========================
+   BACKGROUND ANIMATION
+========================= */
+.bg{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  z-index:-2;
+  background: radial-gradient(circle at top, rgba(255,215,0,0.08), transparent 40%),
+              radial-gradient(circle at bottom, rgba(34,158,217,0.08), transparent 40%);
+}
+
+.particle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:gold;
+  border-radius:50%;
+  opacity:0.4;
+  animation: floatUp 10s linear infinite;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(100vh); opacity:0}
+  20%{opacity:0.6}
+  to{transform:translateY(-10vh); opacity:0}
+}
+
+/* =========================
+   HEADER
+========================= */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 20px;
+  background:rgba(10,15,22,0.7);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,215,0,0.1);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:bold;
+  color:gold;
+}
+
+.logo img{
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  border:2px solid gold;
+}
+
+nav a{
+  color:#aaa;
+  margin-left:15px;
+  text-decoration:none;
+  font-size:14px;
+  transition:0.3s;
+}
+
+nav a:hover{
+  color:gold;
+}
+
+.btn{
+  background:gold;
+  color:black;
+  padding:10px 14px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+  transition:0.3s;
+  box-shadow:0 0 15px rgba(255,215,0,0.3);
+}
+
+.btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 25px rgba(255,215,0,0.6);
+}
+
+.btn-blue{
+  background:#229ED9;
+  color:white;
+  box-shadow:0 0 15px rgba(34,158,217,0.4);
+}
+
+/* =========================
+   HERO
+========================= */
+.hero{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  padding:90px 20px;
+  max-width:1100px;
+  margin:auto;
+  align-items:center;
+}
+
+.hero h1{
+  font-size:52px;
+  background:linear-gradient(90deg,gold,#fff,#229ED9);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation: glow 3s infinite;
+}
+
+@keyframes glow{
+  0%,100%{filter:brightness(1)}
+  50%{filter:brightness(1.6)}
+}
+
+.hero p{
+  color:#bbb;
+  margin-top:15px;
+  line-height:1.6;
+}
+
+.hero-img{
+  width:100%;
+  border-radius:18px;
+  border:1px solid rgba(255,215,0,0.2);
+  box-shadow:0 0 40px rgba(255,215,0,0.15);
+  transform:translateY(0);
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+/* =========================
+   SECTIONS
+========================= */
+section{
+  padding:60px 20px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.title{
+  color:gold;
+  font-size:28px;
+  margin-bottom:20px;
+}
+
+/* =========================
+   CARDS
+========================= */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:rgba(18,26,38,0.7);
+  border:1px solid rgba(255,215,0,0.08);
+  padding:20px;
+  border-radius:15px;
+  transition:0.4s;
+  backdrop-filter:blur(10px);
+}
+
+.card:hover{
+  transform:translateY(-8px);
+  border-color:gold;
+  box-shadow:0 0 25px rgba(255,215,0,0.1);
+}
+
+.card h3{
+  color:gold;
+  margin-bottom:10px;
+}
+
+/* =========================
+   COINS
+========================= */
+.coins span{
+  display:inline-block;
+  margin:6px;
+  padding:8px 12px;
+  border-radius:10px;
+  background:#0f1622;
+  border:1px solid rgba(255,215,0,0.1);
+  transition:0.3s;
+}
+
+.coins span:hover{
+  transform:scale(1.08);
+  border-color:gold;
+}
+
+/* =========================
+   SCROLL ANIMATION
+========================= */
+.fade{
+  opacity:0;
+  transform:translateY(30px);
+  transition:1s ease;
+}
+
+.fade.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer{
+  text-align:center;
+  padding:30px;
+  color:#666;
+  border-top:1px solid rgba(255,215,0,0.1);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width:850px){
+  .hero{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  .hero h1{
+    font-size:38px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<header>
+  <div class="logo">
+    <img src="./img/CZ Logo.png">
+    CryptoZee <br>Exchange</br>
+  </div>
+
+  <nav>
+    <a href="#services">Services</a>
+    <a href="#coins">Coins</a>
+    <a href="#how">How It Works</a>
+  </nav>
+
+  <a class="btn" href="https://t.me/cryptozee001" target="_blank">
+    Trade on Telegram
+  </a>
+</header>
+
+<!-- HERO -->
+<section class="hero fade">
+  <div>
+    <h1>Buy & Sell Crypto Instantly</h1>
+    <p>
+      Fast, secure crypto trading via Telegram. 
+      Buy USDT, BTC, ETH and more with instant settlement.
+    </p>
+
+    <br/>
+
+    <a class="btn btn-blue" href="https://t.me/cryptozee001">Buy Crypto</a>
+    <a class="btn" href="https://t.me/cryptozee_001">Sell Crypto</a>
+  </div>
+
+  <img src="./img/buysell.JPG" class="hero-img">
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="fade">
+  <h2 class="title">What We Do</h2>
+
+  <div class="grid">
+    <div class="card"><h3>Buy Crypto</h3><p>Instant purchase via bank transfer.</p></div>
+    <div class="card"><h3>Sell Crypto</h3><p>Fast cash out to your bank account.</p></div>
+    <div class="card"><h3>Swap</h3><p>Convert coins instantly at market rate.</p></div>
+    <div class="card"><h3>Support</h3><p>24/7 Telegram response system.</p></div>
+  </div>
+</section>
+
+<!-- COINS -->
+<section id="coins" class="fade">
+  <h2 class="title">Supported Coins</h2>
+
+  <div class="coins">
+    <span>USDT</span><span>BTC</span><span>ETH</span><span>SOL</span>
+    <span>BNB</span><span>XRP</span><span>ADA</span><span>DOGE</span>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how" class="fade">
+  <h2 class="title">How It Works</h2>
+
+  <div class="grid">
+    <div class="card"><h3>1. Message Us</h3><p>Click Telegram button.</p></div>
+    <div class="card"><h3>2. Get Rate</h3><p>We send live rate instantly.</p></div>
+    <div class="card"><h3>3. Pay / Send</h3><p>Bank or crypto transfer.</p></div>
+    <div class="card"><h3>4. Instant Delivery</h3><p>Fast settlement guaranteed.</p></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="fade" style="text-align:center;">
+  <h2 class="title">Ready To Trade?</h2>
+  <p style="color:#aaa;max-width:600px;margin:auto;">
+    Join CryptoZee and start trading instantly via Telegram.
+  </p>
+  <br/>
+  <a class="btn btn-blue" href="https://t.me/cryptozee001">Start Trading</a>
+</section>
+
+<footer>
+  © 2026 CryptoZee. All Rights Reserved.
+</footer>
+
+<script>
+// scroll reveal
+const elements = document.querySelectorAll('.fade');
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+});
+
+elements.forEach(el=>observer.observe(el));
+
+// floating particles
+for(let i=0;i<25;i++){
+  let p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random()*100 + "vw";
+  p.style.animationDuration = (5 + Math.random()*10) + "s";
+  document.body.appendChild(p);
+}
+</script>
+
+</body>
+</html>
